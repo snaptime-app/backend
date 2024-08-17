@@ -11,6 +11,16 @@ class UserService {
     });
     return newUser;
   }
+  
+  async getUser(session: string|undefined): Promise<any> {
+    console.log(session)
+    const user = await prisma.user.findUnique({
+      where: {
+        session: session,
+      },
+    });
+    return user;
+  }
 }
 
 export default UserService;

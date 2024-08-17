@@ -19,15 +19,28 @@ class UserRoutes {
       async (
         req: Request,
         res: Response
-      ): Promise<Response> => {
-        console.log(req.body)
-        const newUser = this.userService.createUser(
+      ) => {
+        const newUser = await this.userService.createUser(
           req.body.username,
           req.body.session,
         );
-        return res.json(newUser);
+        res.json(newUser);
       }
     );
+
+    this.router.get(
+      "/get",
+      async (
+        req: Request,
+        res: Response
+      ) => {
+        const user = await this.userService.getUser(
+          req.get("Authorization"),
+        );
+        console.log(user)
+        res.json(user)
+      }
+    )
   }
 }
 
