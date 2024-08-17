@@ -10,17 +10,6 @@
     "start": "tsc && dotenvx run -- npm run dev",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": [
-    "express",
-    "typescript",
-    "rest",
-    "api",
-    "restapi",
-    "node",
-    "nodejs",
-    "crud"
-  ],
-  "license": "ISC",
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.7.0",
     "@types/cors": "^2.8.13",

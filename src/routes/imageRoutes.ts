@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import ImageService from "../services/imageService";
 import { upload } from "../util/imageUpload";
 
-class RootRoutes {
+class ImageRoutes {
     router = Router();
     imageService: ImageService;
 
@@ -35,4 +35,4 @@ class RootRoutes {
     }
 }
 
-export default new RootRoutes().router;
+export default new ImageRoutes().router;
