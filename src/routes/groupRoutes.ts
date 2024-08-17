@@ -21,7 +21,15 @@ class GroupRoutes {
       res.json(newGroup);
     });
 
-    this.router.post('/update/:id', async (req: Request, res: Response) => {
+    this.router.post('/list', async (req: Request, res: Response) => {
+      const user = await this.userService.getUser(req.get('Authorization'));
+      const groupList = await this.groupService.listGroups(
+        user.id,
+      );
+      res.json(groupList);
+    });
+
+    this.router.post('/:id/adduser', async (req: Request, res: Response) => {
       const updatedGroup = await this.groupService.updateGroup(
         req.body.username,
         parseInt(req.params.id),
@@ -30,7 +38,7 @@ class GroupRoutes {
     });
 
       this.router.get(
-        "/get/:id",
+        "/:id",
         async (
           req: Request,
           res: Response

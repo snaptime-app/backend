@@ -24,6 +24,20 @@ class GroupService {
     return newGroup;
   }
 
+  async listGroups(userId: number): Promise<any> {
+    const groups = await prisma.group.findMany({
+      where: {
+        GroupMembership: {
+          some: {
+            userId,
+          },
+        },
+      },
+    });
+
+    return groups;
+  }
+
   async updateGroup(username: string, groupid: number): Promise<any> {
     const updateGroup = await prisma.groupMembership.create({
       data: {
@@ -43,33 +57,35 @@ class GroupService {
     return updateGroup;
   }
 
-  async viewGroup (groupid: number): Promise<any> {
+  async viewGroup(groupid: number): Promise<any> {
     const groupMembers = await prisma.user.findMany({
-        where: {
-          GroupMembership: {
-            some: {
-              group: {
-                id: groupid, // Replace with the actual group name
+      where: {
+        GroupMembership: {
+          some: {
+            groupId: {
+              equals: groupid,
+            },
+          },
+        },
+      },
+      select: {
+        id: true,
+        username: true,
+        GroupMembership: {
+          select: {
+            points: true,
+          },
+          where: {
+            group: {
+              id: {
+                equals: groupid, // Ensure this matches the group name in the where clause
               },
             },
           },
         },
-        select: {
-          id: true,
-          username: true,
-          GroupMembership: {
-            select: {
-              points: true,
-            },
-            where: {
-              group: {
-                id: groupid, // Ensure this matches the group name in the where clause
-              },
-            },
-          },
-        },
-      });
-      console.log(groupMembers)
+      },
+    });
+    console.log(groupMembers);
     return groupMembers;
   }
 }
