@@ -21,7 +21,6 @@ class UserRoutes {
         res: Response
       ): Promise<Response> => {
         const newUser = this.userService.createUser({
-          id: req.body.id,
           username: req.body.username,
           session: req.body.session,
         });
