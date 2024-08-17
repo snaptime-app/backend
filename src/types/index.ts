@@ -23,6 +23,7 @@ interface GroupMembership {
     groupId: number
     group: Group
 }
+
 interface Challenge {
     id: number
     createdAt: Date

@@ -1,6 +1,7 @@
 import express, { Application } from "express";
 import cors, { CorsOptions } from "cors";
 import Routes from "./routes";
+import path from "path";
 
 export default class Server {
   constructor(app: Application) {
@@ -12,6 +13,8 @@ export default class Server {
     const corsOptions: CorsOptions = {
       origin: "http://localhost:8081"
     };
+
+    app.use("/uploads", express.static("uploads"));
 
     app.use(cors(corsOptions));
     app.use(express.json());

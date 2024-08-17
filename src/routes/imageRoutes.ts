@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import ImageService from "../services/imageService";
+import { upload } from "../util/imageUpload";
 
 class RootRoutes {
     router = Router();
@@ -11,6 +12,19 @@ class RootRoutes {
     }
 
     intializeRoutes() {
+        this.router.post(
+            "/upload",
+            upload.single("imageUpload"),
+            async (req: Request, res: Response): Promise<Response> => {
+                if (!req.file) {
+                    throw new Error("No file uploaded");
+                }
+                return res.status(201).json({
+                    key: req.file.path,
+                });
+            }
+        );
+
         this.router.post("/areSimilar", async (req: Request, res: Response): Promise<Response> => {
             const isSimilar: boolean = await this.imageService.determineImagesSimilar(
                 req.body.imageUrlA,
