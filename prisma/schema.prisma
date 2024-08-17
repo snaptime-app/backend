@@ -55,5 +55,5 @@ model Submission {
   challengeId Int @unique
   challenge Challenge @relation(fields: [challengeId], references: [id])
   creatorId Int @unique
-  creator User @relation (fields: [creatorId], references: [id])
+  creator User @relation(fields: [creatorId], references: [id])
 }
