@@ -12,16 +12,16 @@ interface Group {
     name: string
     GroupMembership: GroupMembership[]
     challenges: Challenge[]
-  }
+}
 
 interface GroupMembership {
     points: number
 
     userId: number
     user: User
-  
+
     groupId: number
-    group: Group 
+    group: Group
 }
 interface Challenge {
     id: number
@@ -44,12 +44,17 @@ interface Submission {
     creator: User
 }
 
+interface ImageSimilarResult {
+    isSimilar: boolean;
+}
+
 export {
     User,
     Group,
     GroupMembership,
     Challenge,
     Submission,
+    ImageSimilarResult,
 };
 
-export type CreateUser = Omit <User, "id"| "GroupMembership" | "challenges" | "submissions">;
+export type CreateUser = Omit<User, "id" | "GroupMembership" | "challenges" | "submissions">;
