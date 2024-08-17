@@ -21,7 +21,7 @@ class GroupRoutes {
       res.json(newGroup);
     });
 
-    this.router.post('/list', async (req: Request, res: Response) => {
+    this.router.get('/list', async (req: Request, res: Response) => {
       const user = await this.userService.getUser(req.get('Authorization'));
       const groupList = await this.groupService.listGroups(
         user.id,
@@ -38,13 +38,12 @@ class GroupRoutes {
     });
 
       this.router.get(
-        "/:id",
+        "/get-members/:id",
         async (
           req: Request,
           res: Response
         ) => {
-          const groupname = decodeURIComponent(req.params.groupname);
-          const group = await this.groupService.viewGroup(
+          const group = await this.groupService.viewGroupMembers(
             parseInt(req.params.id),
           );
           const transformedData = group.map((person: { id:any; username: any; GroupMembership: { points: any; }[]; }) => ({
@@ -53,6 +52,19 @@ class GroupRoutes {
             points: person.GroupMembership[0].points
           }));
           res.json(transformedData);
+        }
+      );
+
+      this.router.get(
+        "/get-challenges/:groupid",
+        async (
+          req: Request,
+          res: Response
+        ) => {
+          const challenges = await this.groupService.viewChallenges(
+            parseInt(req.params.groupid),
+          );
+          res.json(challenges);
         }
       );
   }
