@@ -41,6 +41,7 @@ model Challenge {
   id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  correctImage String @unique
   groupId Int @unique
   group Group @relation(fields: [groupId], references: [id])
   authorId Int @unique
@@ -51,6 +52,7 @@ model Challenge {
 model Submission {
   id Int @id @default(autoincrement())
   isCorrect Boolean
+  attemptedImage String @unique
   createdAt DateTime @default(now())
   challengeId Int @unique
   challenge Challenge @relation(fields: [challengeId], references: [id])

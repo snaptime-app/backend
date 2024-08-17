@@ -21,7 +21,8 @@ class SubmissionRoutes {
         const user = await this.userService.getUser(req.get('Authorization'));
         const submission = await this.submissionService.createSubmission(
           user.id,
-          req.body.challengeid
+          req.body.challengeid,
+          req.body.imageid
         );
         res.json(submission)
       }

@@ -12,8 +12,8 @@ class ChallengeRoutes {
   }
 
   intializeRoutes() {
-    this.router.get(
-      "/create/:groupid",
+    this.router.post(
+      "/create",
       async (
         req: Request,
         res: Response
@@ -21,7 +21,8 @@ class ChallengeRoutes {
         const user = await this.userService.getUser(req.get('Authorization'));
         const challenge = await this.challengeService.createChallenge(
           user.id,
-          parseInt(req.params.groupid)
+          req.body.groupid,
+          req.body.imagekey
         );
         res.json(challenge)
       }
