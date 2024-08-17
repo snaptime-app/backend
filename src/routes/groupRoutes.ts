@@ -47,7 +47,12 @@ class GroupRoutes {
           const group = await this.groupService.viewGroup(
             req.body.groupname
           );
-          res.json(group);
+          const transformedData = group.map((person: { id:any; username: any; GroupMembership: { points: any; }[]; }) => ({
+            user_id: person.id,
+            username: person.username,
+            points: person.GroupMembership[0].points
+          }));
+          res.json(transformedData);
         }
       );
   }

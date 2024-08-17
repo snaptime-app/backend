@@ -42,11 +42,33 @@ class GroupService {
   }
 
   async viewGroup (groupname: string): Promise<any> {
-    const group = await prisma.group.findUnique({
-      where: {
-        name:groupname,
-    }});
-    return group;
+    const groupMembers = await prisma.user.findMany({
+        where: {
+          GroupMembership: {
+            some: {
+              group: {
+                name: groupname, // Replace with the actual group name
+              },
+            },
+          },
+        },
+        select: {
+          id: true,
+          username: true,
+          GroupMembership: {
+            select: {
+              points: true,
+            },
+            where: {
+              group: {
+                name: groupname, // Ensure this matches the group name in the where clause
+              },
+            },
+          },
+        },
+      });
+      console.log(groupMembers)
+    return groupMembers;
   }
 }
 
