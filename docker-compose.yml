@@ -3,6 +3,7 @@ services:
     container_name: snaptime_backend
     # image: ghcr.io/snaptime-app/backend
     build: .
+    restart: always
     volumes:
       - uploads:/app/uploads:rw
     ports:
