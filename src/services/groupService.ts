@@ -1,5 +1,5 @@
-import { Group } from "../types";
-import { prisma } from "../util/prismaClient";
+import { Group } from '../types';
+import { prisma } from '../util/prismaClient';
 
 class GroupService {
   router: any;
@@ -8,44 +8,54 @@ class GroupService {
       data: {
         name: groupname,
         GroupMembership: {
-            create: [
-                {
-                    points: 0,
-                    user: {
-                        connect: {
-                            username: username,
-                        },
-                    }
-                }
-            ]
-        }
-    }});
+          create: [
+            {
+              points: 0,
+              user: {
+                connect: {
+                  username: username,
+                },
+              },
+            },
+          ],
+        },
+      },
+    });
     return newGroup;
   }
-  
+
   async updateGroup(username: string, groupname: string): Promise<any> {
     const updateGroup = await prisma.groupMembership.create({
       data: {
         points: 0,
         user: {
-            connect: {
-                username: username,
-            },
+          connect: {
+            username: username,
+          },
         },
         group: {
-            connect: {
-                name: groupname,
-            }
-        }
-    }});
+          connect: {
+            name: groupname,
+          },
+        },
+      },
+    });
     return updateGroup;
   }
 
-  async viewGroup (groupname: string): Promise<any> {
+  async viewGroup(groupname: string): Promise<any> {
     const group = await prisma.group.findUnique({
       where: {
-        name:groupname,
-    }});
+        name: groupname,
+      },
+      include: {
+        GroupMembership: {
+          include: {
+            user: true,
+          },
+        },
+      }
+    });
     return group;
   }
 }
