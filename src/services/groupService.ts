@@ -43,7 +43,7 @@ class GroupService {
     return updateGroup;
   }
 
-  async viewGroup (groupid: number): Promise<any> {
+  async viewGroupMembers (groupid: number): Promise<any> {
     const groupMembers = await prisma.user.findMany({
         where: {
           GroupMembership: {
@@ -69,6 +69,12 @@ class GroupService {
           },
         },
       });
+      console.log(groupMembers)
+    return groupMembers;
+  }
+
+  async viewChallenges (groupid: number): Promise<any> {
+    const groupMembers = await prisma.user.findMany();
       console.log(groupMembers)
     return groupMembers;
   }
