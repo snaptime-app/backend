@@ -20,10 +20,11 @@ class UserRoutes {
         req: Request,
         res: Response
       ): Promise<Response> => {
-        const newUser = this.userService.createUser({
-          username: req.body.username,
-          session: req.body.session,
-        });
+        console.log(req.body)
+        const newUser = this.userService.createUser(
+          req.body.username,
+          req.body.session,
+        );
         return res.json(newUser);
       }
     );
