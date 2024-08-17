@@ -56,15 +56,26 @@ class GroupRoutes {
       );
 
       this.router.get(
-        "/get-challenges/:groupid",
+        "/getchallenges/:groupid",
         async (
           req: Request,
           res: Response
         ) => {
+          const user = await this.userService.getUser(
+                req.get("Authorization"),
+            );
           const challenges = await this.groupService.viewChallenges(
-            parseInt(req.params.groupid),
+            user.id,
+            parseInt(req.params.groupid)
           );
-          res.json(challenges);
+          console.log(challenges)
+          const challengesWithCompletionStatus = challenges.map((challenge: { id: any; createdAt: any; author: { username: any; }; submissions: string | any[]; }) => ({
+            id: challenge.id,
+            createdAt: challenge.createdAt,
+            author: challenge.author.username,
+            completed: challenge.submissions.length > 0, // If there are any submissions, the challenge is considered completed
+          }));
+          res.json(challengesWithCompletionStatus);
         }
       );
   }

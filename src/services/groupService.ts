@@ -89,10 +89,33 @@ class GroupService {
     return groupMembers;
   }
 
-  async viewChallenges (groupid: number): Promise<any> {
-    const groupMembers = await prisma.user.findMany();
-      console.log(groupMembers)
-    return groupMembers;
+  async viewChallenges (userid: number, groupid: number): Promise<any> {
+    const challenges = await prisma.challenge.findMany({
+        where: {
+            groupId: {
+                equals: groupid
+            }
+        },
+        select: {
+            id: true,
+            createdAt: true,
+            author: {
+                select: {
+                  username: true,
+                },
+            },
+            submissions: {
+                where: {
+                  creatorId: userid,
+                },
+                select: {
+                  isCorrect: true,
+                },
+              },
+        }
+    });
+
+    return challenges;
   }
 }
 
