@@ -1,5 +1,13 @@
-import { Request, Response } from "express";
+import { User } from "../types";
+import { prisma } from "../util/prismaClient";
 
-export function test(req: Request, res: Response): Response {
-  return res.json({ message: "It works!" });
+class UserService {
+  async createUser(newUserData: User): Promise<any> {
+    const newUser = await prisma.user.create({
+      data: newUserData,
+    });
+    return newUser;
+  }
 }
+
+export default UserService;
