@@ -11,20 +11,49 @@ datasource db {
 }
 
 model User {
-  id String @id
+  id Int @id @default(autoincrement())
   username String @unique
-  session String @unique
-  
+  session String @unique 
+  GroupMembership GroupMembership[]
+  challenges Challenge[]
+  submissions Submission[]
+}
+
+model Group {
+  id Int @id @default(autoincrement())
+  name String @unique
+  GroupMembership GroupMembership[]
   challenges Challenge[]
 }
 
-model Challenge {
-  id String @id
-  // group: ForeignKey to Group
+model GroupMembership {
+  points Int
 
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+
+  groupId Int
+  group Group @relation(fields: [groupId], references: [id])
+
+  @@id([userId, groupId])
+}
+model Challenge {
+  id Int @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
+  groupId Int @unique
+  group Group @relation(fields: [groupId], references: [id])
+  authorId Int @unique
   author User @relation(fields: [authorId], references: [id])
-  authorId String
+  submissions Submission[]
+}
+
+model Submission {
+  id Int @id @default(autoincrement())
+  isCorrect Boolean
+  createdAt DateTime @default(now())
+  challengeId Int @unique
+  challenge Challenge @relation(fields: [challengeId], references: [id])
+  creatorId Int @unique
+  creator User @relation (fields: [creatorId], references: [id])
 }
