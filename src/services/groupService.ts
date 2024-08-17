@@ -99,9 +99,11 @@ class GroupService {
         select: {
             id: true,
             createdAt: true,
+            correctImage: true,
             author: {
                 select: {
                   username: true,
+                  id: true
                 },
             },
             submissions: {

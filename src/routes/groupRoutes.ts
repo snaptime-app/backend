@@ -29,10 +29,10 @@ class GroupRoutes {
       res.json(groupList);
     });
 
-    this.router.post('/:id/adduser', async (req: Request, res: Response) => {
+    this.router.post('/:groupid/adduser', async (req: Request, res: Response) => {
       const updatedGroup = await this.groupService.updateGroup(
         req.body.username,
-        parseInt(req.params.id),
+        parseInt(req.params.groupid),
       );
       res.json(updatedGroup);
     });
@@ -69,10 +69,12 @@ class GroupRoutes {
             parseInt(req.params.groupid)
           );
           console.log(challenges)
-          const challengesWithCompletionStatus = challenges.map((challenge: { id: any; createdAt: any; author: { username: any; }; submissions: string | any[]; }) => ({
+          const challengesWithCompletionStatus = challenges.map((challenge: { id: any; createdAt: any; correctImage: any; author: { username: any; id: any}; submissions: string | any[]; }) => ({
             id: challenge.id,
             createdAt: challenge.createdAt,
+            correctImage: challenge.correctImage,
             author: challenge.author.username,
+            isowner: (challenge.author.id == user.id),
             completed: challenge.submissions.length > 0, // If there are any submissions, the challenge is considered completed
           }));
           res.json(challengesWithCompletionStatus);

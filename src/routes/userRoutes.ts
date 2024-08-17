@@ -37,7 +37,7 @@ class UserRoutes {
         const user = await this.userService.getUser(
           req.get("Authorization"),
         );
-        console.log(user)
+        //console.log(user)
         res.json(user)
       }
     )
