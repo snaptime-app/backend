@@ -43,20 +43,34 @@ class GroupService {
     return updateGroup;
   }
 
-  async viewGroup(groupname: string): Promise<any> {
-    const group = await prisma.group.findUnique({
-      where: {
-        name: groupname,
-      },
-      include: {
-        GroupMembership: {
-          include: {
-            user: true,
+  async viewGroup (groupname: string): Promise<any> {
+    const groupMembers = await prisma.user.findMany({
+        where: {
+          GroupMembership: {
+            some: {
+              group: {
+                name: groupname, // Replace with the actual group name
+              },
+            },
           },
         },
-      }
-    });
-    return group;
+        select: {
+          id: true,
+          username: true,
+          GroupMembership: {
+            select: {
+              points: true,
+            },
+            where: {
+              group: {
+                name: groupname, // Ensure this matches the group name in the where clause
+              },
+            },
+          },
+        },
+      });
+      console.log(groupMembers)
+    return groupMembers;
   }
 }
 
