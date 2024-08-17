@@ -21,22 +21,23 @@ class GroupRoutes {
       res.json(newGroup);
     });
 
-    this.router.post('/update', async (req: Request, res: Response) => {
+    this.router.post('/update/:id', async (req: Request, res: Response) => {
       const updatedGroup = await this.groupService.updateGroup(
         req.body.username,
-        req.body.groupname,
+        parseInt(req.params.id),
       );
       res.json(updatedGroup);
     });
 
       this.router.get(
-        "/get",
+        "/get/:id",
         async (
           req: Request,
           res: Response
         ) => {
+          const groupname = decodeURIComponent(req.params.groupname);
           const group = await this.groupService.viewGroup(
-            req.body.groupname
+            parseInt(req.params.id),
           );
           const transformedData = group.map((person: { id:any; username: any; GroupMembership: { points: any; }[]; }) => ({
             user_id: person.id,
