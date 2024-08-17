@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "dev": "dotenvx run -- nodemon -L",
-    "start": "tsc && dotenvx run -- npm run dev"
+    "start": "tsc && dotenvx run -- npm run dev",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "express",
