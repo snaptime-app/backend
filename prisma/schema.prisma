@@ -48,12 +48,12 @@ model Challenge {
 }
 
 model Submission {
-  id             Int       @id @default(autoincrement())
-  isCorrect      Boolean
-  attemptedImage String    @unique
-  createdAt      DateTime  @default(now())
-  challengeId    Int       @unique
-  challenge      Challenge @relation(fields: [challengeId], references: [id])
-  creatorId      Int       @unique
-  creator        User      @relation(fields: [creatorId], references: [id])
+  id Int @id @default(autoincrement())
+  isCorrect Boolean
+  attemptedImage String @unique
+  createdAt DateTime @default(now())
+  challengeId Int
+  challenge Challenge @relation(fields: [challengeId], references: [id])
+  creatorId Int
+  creator User @relation(fields: [creatorId], references: [id])
 }
