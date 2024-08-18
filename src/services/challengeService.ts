@@ -19,7 +19,12 @@ class ChallengeService {
         id: challengeId,
       },
       include: {
-        submissions: true,
+        submissions: {
+          include: {
+            challenge: true,
+            creator: true,
+          }
+        },
         author: true,
         group: true,
       }
