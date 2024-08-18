@@ -1,26 +1,40 @@
-import { Group } from "../types";
 import { prisma } from "../util/prismaClient";
+import ImageService from "./imageService";
 
 class SubmissionService {
-  async createSubmission(userid: number, challengeid: number, attemptedimageid: string): Promise<any> {
-    console.log(challengeid)
-    const challengeImageID = await prisma.challenge.findUnique({
+  imageService: ImageService;
+
+  constructor() {
+    this.imageService = new ImageService();
+  }
+
+  async createSubmission(userId: number, challengeId: number, attemptedImageId: string): Promise<any> {
+    const challengeImageId = await prisma.challenge.findUnique({
       where: {
-        id: challengeid,
+        id: challengeId,
       },
       select: {
         correctImage: true,
       },
     });
-    console.log(challengeImageID)
+
+    if (!challengeImageId) {
+      throw new Error(`Challenge with id ${challengeId} was not found.`);
+    }
+
+    const acceptSubmission: boolean = await this.imageService.determineImagesSimilar(
+      attemptedImageId,
+      challengeImageId.correctImage,
+    );
 
     const newSubmission = await prisma.submission.create({
       data: {
-        isCorrect: true,
-        attemptedImage: attemptedimageid,
-        challengeId: challengeid,
-        creatorId: userid,
-    }});
+        isCorrect: acceptSubmission,
+        attemptedImage: attemptedImageId,
+        challengeId: challengeId,
+        creatorId: userId,
+      }
+    });
     return newSubmission;
   }
 }
