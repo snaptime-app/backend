@@ -22,9 +22,15 @@ class SubmissionService {
       throw new Error(`Challenge with id ${challengeId} was not found.`);
     }
 
+    const attemptImageUrl = `${baseUrl}/${attemptedImageId}`;
+    const challengeImageUrl = `${baseUrl}/${challengeImageId.correctImage}`;
+
+    console.log("Attempt Image URL:", attemptImageUrl);
+    console.log("Challenge Image URL:", challengeImageUrl);
+
     const acceptSubmission: boolean = await this.imageService.determineImagesSimilar(
-      `${baseUrl}/${attemptedImageId}`,
-      `${baseUrl}/${challengeImageId.correctImage}`,
+      attemptImageUrl,
+      challengeImageUrl,
     );
 
     const newSubmission = await prisma.submission.create({
