@@ -21,6 +21,19 @@ class UserService {
     });
     return user;
   }
+
+  async getAllUsers(): Promise<any[]> {
+    const users = await prisma.user.findMany({
+      include: {
+        GroupMembership: true,
+      },
+    });
+
+    return users.map(user => ({
+      username: user.username,
+      GroupMembership: user.GroupMembership,
+    }));
+  }
 }
 
 export default UserService;

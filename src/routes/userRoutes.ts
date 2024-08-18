@@ -41,6 +41,17 @@ class UserRoutes {
         res.json(user)
       }
     )
+
+    this.router.get(
+      "/all",
+      async (
+        req: Request,
+        res: Response
+      ) => {
+        const users = await this.userService.getAllUsers();
+        res.json(users);
+      }
+    );
   }
 }
 
