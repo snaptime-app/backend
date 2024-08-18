@@ -24,15 +24,19 @@ class UserService {
 
   async getAllUsers(): Promise<any[]> {
     const users = await prisma.user.findMany({
-      include: {
-        GroupMembership: true,
-      },
+      select: {
+        username: true,
+        GroupMembership: {
+          select: {
+            userId: true,
+            points: true,
+            groupId: true, // Adjust this based on your actual schema
+          }
+        },
+      }
     });
 
-    return users.map(user => ({
-      username: user.username,
-      GroupMembership: user.GroupMembership,
-    }));
+    return users;
   }
 }
 
