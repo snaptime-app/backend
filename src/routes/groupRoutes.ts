@@ -50,49 +50,48 @@ class GroupRoutes {
       }
     );
 
-      this.router.get(
-        "/get-members/:id",
-        async (
-          req: Request,
-          res: Response
-        ) => {
-          const group = await this.groupService.viewGroupMembers(
-            parseInt(req.params.id),
-          );
-          const transformedData = group.map((person: { id:any; username: any; GroupMembership: { points: any; }[]; }) => ({
-            user_id: person.id,
-            username: person.username,
-            points: person.GroupMembership[0].points
-          }));
-          res.json(transformedData);
-        }
-      );
+    this.router.get(
+      "/get-members/:id",
+      async (
+        req: Request,
+        res: Response
+      ) => {
+        const group = await this.groupService.viewGroupMembers(
+          parseInt(req.params.id),
+        );
+        const transformedData = group.map((person: { id: any; username: any; GroupMembership: { points: any; }[]; }) => ({
+          user_id: person.id,
+          username: person.username,
+          points: person.GroupMembership[0].points
+        }));
+        res.json(transformedData);
+      }
+    );
 
-      this.router.get(
-        "/getchallenges/:groupid",
-        async (
-          req: Request,
-          res: Response
-        ) => {
-          const user = await this.userService.getUser(
-                req.get("Authorization"),
-            );
-          const challenges = await this.groupService.viewChallenges(
-            user.id,
-            parseInt(req.params.groupid)
-          );
-          console.log(challenges)
-          const challengesWithCompletionStatus = challenges.map((challenge: { id: any; createdAt: any; correctImage: any; author: { username: any; id: any}; submissions: string | any[]; }) => ({
-            id: challenge.id,
-            createdAt: challenge.createdAt,
-            correctImage: challenge.correctImage,
-            author: challenge.author.username,
-            isowner: (challenge.author.id == user.id),
-            completed: challenge.submissions.length > 0, // If there are any submissions, the challenge is considered completed
-          }));
-          res.json(challengesWithCompletionStatus);
-        }
-      );
+    this.router.get(
+      "/getchallenges/:groupid",
+      async (
+        req: Request,
+        res: Response
+      ) => {
+        const user = await this.userService.getUser(
+          req.get("Authorization"),
+        );
+        const challenges = await this.groupService.viewChallenges(
+          user.id,
+          parseInt(req.params.groupid)
+        );
+        const challengesWithCompletionStatus = challenges.map((challenge: { id: any; createdAt: any; correctImage: any; author: { username: any; id: any }; submissions: string | any[]; }) => ({
+          id: challenge.id,
+          createdAt: challenge.createdAt,
+          correctImage: challenge.correctImage,
+          author: challenge.author.username,
+          isowner: (challenge.author.id == user.id),
+          completed: challenge.submissions.length > 0, // If there are any submissions, the challenge is considered completed
+        }));
+        res.json(challengesWithCompletionStatus);
+      }
+    );
   }
 }
 

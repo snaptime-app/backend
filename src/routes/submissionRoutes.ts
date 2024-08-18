@@ -23,9 +23,9 @@ class SubmissionRoutes {
           user.id,
           req.body.challengeid,
           req.body.imagekey,
-          req.baseUrl,
+          `${req.protocol}://${req.get("Host")}`,
         );
-        res.json(submission)
+        res.json(submission);
       }
     )
   }

@@ -2,16 +2,16 @@ interface User {
     id: number;
     username: string;
     session: string;
-    GroupMembership: GroupMembership[]
-    challenges: Challenge[]
-    submissions: Submission[]
+    // GroupMembership: GroupMembership[]
+    // challenges: Challenge[]
+    // submissions: Submission[]
 }
 
 interface Group {
     id: number
     name: string
-    GroupMembership: GroupMembership[]
-    challenges: Challenge[]
+    // GroupMembership: GroupMembership[]
+    // challenges: Challenge[]
 }
 
 interface GroupMembership {
@@ -40,22 +40,25 @@ interface Submission {
     isCorrect: Boolean
     createdAt: Date
     challengeId: number
-    challenge: Challenge
+    // challenge: Challenge
     creatorId: number
-    creator: User
+    // creator: User
 }
 
 interface ImageSimilarResult {
     isSimilar: boolean;
 }
 
+type ChallengeDetail = Omit<Challenge, "group" | "author">
+type CreateUser = Omit<User, "id" | "GroupMembership" | "challenges" | "submissions">;
+
 export {
     User,
+    CreateUser,
     Group,
     GroupMembership,
     Challenge,
+    ChallengeDetail,
     Submission,
     ImageSimilarResult,
 };
-
-export type CreateUser = Omit<User, "id" | "GroupMembership" | "challenges" | "submissions">;

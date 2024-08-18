@@ -11,9 +11,8 @@ class UserService {
     });
     return newUser;
   }
-  
-  async getUser(session: string|undefined): Promise<any> {
-    console.log(session)
+
+  async getUser(session: string | undefined): Promise<any> {
     const user = await prisma.user.findUnique({
       where: {
         session: session,

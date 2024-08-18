@@ -39,8 +39,40 @@ class SubmissionService {
         attemptedImage: attemptedImageId,
         challengeId: challengeId,
         creatorId: userId,
+      },
+      include: {
+        challenge: true,
+        creator: true,
       }
     });
+
+    if (acceptSubmission) {
+      // Find the group associated with the challenge
+      const challenge = await prisma.challenge.findUnique({
+        where: { id: challengeId },
+        select: {
+          groupId: true,
+        },
+      });
+
+      if (challenge) {
+        // Increment the user's points in the group
+        await prisma.groupMembership.update({
+          where: {
+            userId_groupId: {
+              userId: userId,
+              groupId: challenge.groupId,
+            },
+          },
+          data: {
+            points: {
+              increment: 10, // Increment by 1 point, or adjust based on your logic
+            },
+          },
+        });
+      }
+    }
+
     return newSubmission;
   }
 }
