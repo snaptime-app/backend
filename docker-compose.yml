@@ -3,13 +3,40 @@ services:
     container_name: snaptime_backend
     # image: ghcr.io/snaptime-app/backend
     build: .
-    restart: always
+    restart: unless-stopped
     volumes:
       - uploads:/app/uploads:rw
+      - sqlite_data:/app/prod_database
     ports:
       - 8081:8080
     env_file:
       - .env.prod
+    # environment:
+    #   - DATABASE_PROVIDER=postgres
+    #   - DATABASE_URL=snaptime:password@snaptime_database:5432/snaptime
+    # depends_on:
+    #   database:
+    #     condition: service_healthy
+  
+  # database:
+  #   container_name: snaptime_database
+  #   image: postgres:16.4
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_USER=user
+  #     - POSTGRES_PASSWORD=password
+  #     - POSTGRES_DB=snaptime
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready"]
+  #     interval: 1s
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data:rw
+  
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
   
 volumes:
   uploads:
@@ -17,4 +44,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: '/srv/snaptime'
+      device: '/srv/snaptime/uploads'
+  sqlite_data:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: '/srv/snaptime/database'
+  pgdata:

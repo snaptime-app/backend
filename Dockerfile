@@ -7,13 +7,8 @@ RUN ["yarn", "install"]
 
 COPY . .
 
-ENV DATABASE_URL=file:./dev
-RUN ["npx", "prisma", "migrate", "deploy"]
-
-RUN ["npx", "prisma", "generate"]
-
 RUN ["yarn", "build"]
 
 EXPOSE 8080
 
-CMD [ "node", "./build/server.js" ]
+ENTRYPOINT [ "./docker-entrypoint.sh" ]

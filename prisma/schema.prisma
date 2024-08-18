@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,42 +8,43 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  username String @unique
-  session String @unique 
+  id              Int               @id @default(autoincrement())
+  username        String            @unique
+  session         String            @unique
   GroupMembership GroupMembership[]
-  challenges Challenge[]
-  submissions Submission[]
+  challenges      Challenge[]
+  submissions     Submission[]
 }
 
 model Group {
-  id Int @id @default(autoincrement())
-  name String @unique
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
   GroupMembership GroupMembership[]
-  challenges Challenge[]
+  challenges      Challenge[]
 }
 
 model GroupMembership {
   points Int
 
   userId Int
-  user User @relation(fields: [userId], references: [id])
+  user   User @relation(fields: [userId], references: [id])
 
   groupId Int
-  group Group @relation(fields: [groupId], references: [id])
+  group   Group @relation(fields: [groupId], references: [id])
 
   @@id([userId, groupId])
 }
+
 model Challenge {
-  id Int @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  correctImage String @unique
-  groupId Int @unique
-  group Group @relation(fields: [groupId], references: [id])
-  authorId Int @unique
-  author User @relation(fields: [authorId], references: [id])
-  submissions Submission[]
+  id           Int          @id @default(autoincrement())
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  correctImage String       @unique
+  groupId      Int          
+  group        Group        @relation(fields: [groupId], references: [id])
+  authorId     Int          
+  author       User         @relation(fields: [authorId], references: [id])
+  submissions  Submission[]
 }
 
 model Submission {
@@ -54,8 +52,8 @@ model Submission {
   isCorrect Boolean
   attemptedImage String @unique
   createdAt DateTime @default(now())
-  challengeId Int @unique
+  challengeId Int
   challenge Challenge @relation(fields: [challengeId], references: [id])
-  creatorId Int @unique
+  creatorId Int 
   creator User @relation(fields: [creatorId], references: [id])
 }
