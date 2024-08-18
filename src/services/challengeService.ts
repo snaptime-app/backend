@@ -1,4 +1,4 @@
-import { Group } from "../types";
+import { Challenge, ChallengeDetail, Group } from "../types";
 import { prisma } from "../util/prismaClient";
 
 class ChallengeService {
@@ -8,8 +8,21 @@ class ChallengeService {
         groupId: groupid,
         authorId: userid,
         correctImage: imagekey
-    }});
+      }
+    });
     return newChallenge;
+  }
+
+  async getChallenge(challengeId: number): Promise<ChallengeDetail> {
+    const challenge = await prisma.challenge.findUnique({
+      where: {
+        id: challengeId,
+      }
+    });
+    if (!challenge) {
+      throw new Error(`Challenge with id ${challengeId} not found`);
+    }
+    return challenge;
   }
 }
 

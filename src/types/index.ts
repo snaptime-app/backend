@@ -49,13 +49,16 @@ interface ImageSimilarResult {
     isSimilar: boolean;
 }
 
+type ChallengeDetail = Omit<Challenge, "group" | "author" | "submissions">
+type CreateUser = Omit<User, "id" | "GroupMembership" | "challenges" | "submissions">;
+
 export {
     User,
+    CreateUser,
     Group,
     GroupMembership,
     Challenge,
+    ChallengeDetail,
     Submission,
     ImageSimilarResult,
 };
-
-export type CreateUser = Omit<User, "id" | "GroupMembership" | "challenges" | "submissions">;

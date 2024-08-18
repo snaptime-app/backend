@@ -25,7 +25,7 @@ class SubmissionRoutes {
           req.body.imagekey,
           req.baseUrl,
         );
-        res.json(submission)
+        res.json(submission);
       }
     )
   }

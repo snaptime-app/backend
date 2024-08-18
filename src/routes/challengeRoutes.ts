@@ -26,6 +26,19 @@ class ChallengeRoutes {
         );
         res.json(challenge)
       }
+    );
+
+    this.router.get(
+      "/:id",
+      async (
+        req: Request,
+        res: Response,
+      ) => {
+        const challenge = await this.challengeService.getChallenge(
+          parseInt(req.params.id),
+        );
+        return challenge;
+      }
     )
   }
 }
