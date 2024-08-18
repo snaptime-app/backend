@@ -81,7 +81,6 @@ class GroupRoutes {
           user.id,
           parseInt(req.params.groupid)
         );
-        console.log(challenges)
         const challengesWithCompletionStatus = challenges.map((challenge: { id: any; createdAt: any; correctImage: any; author: { username: any; id: any }; submissions: string | any[]; }) => ({
           id: challenge.id,
           createdAt: challenge.createdAt,
