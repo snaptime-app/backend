@@ -39,6 +39,10 @@ class SubmissionService {
         attemptedImage: attemptedImageId,
         challengeId: challengeId,
         creatorId: userId,
+      },
+      include: {
+        challenge: true,
+        creator: true,
       }
     });
 
@@ -50,7 +54,7 @@ class SubmissionService {
           groupId: true,
         },
       });
-  
+
       if (challenge) {
         // Increment the user's points in the group
         await prisma.groupMembership.update({
