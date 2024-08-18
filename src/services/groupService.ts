@@ -59,18 +59,18 @@ class GroupService {
 
   async viewGroupDetails(groupid: number): Promise<any> {
     const details = await prisma.group.findUnique({
-        where: {
-          id: groupid
-        },
-        select: {
-          id: true,
-          name: true
-        }
+      where: {
+        id: groupid
+      },
+      select: {
+        id: true,
+        name: true
+      }
     });
     return details;
   }
 
-  async viewGroupMembers (groupid: number): Promise<any> {
+  async viewGroupMembers(groupid: number): Promise<any> {
     const groupMembers = await prisma.user.findMany({
       where: {
         GroupMembership: {
@@ -98,36 +98,35 @@ class GroupService {
         },
       },
     });
-    console.log(groupMembers);
     return groupMembers;
   }
 
-  async viewChallenges (userid: number, groupid: number): Promise<any> {
+  async viewChallenges(userid: number, groupid: number): Promise<any> {
     const challenges = await prisma.challenge.findMany({
-        where: {
-            groupId: {
-                equals: groupid
-            }
-        },
-        select: {
-            id: true,
-            createdAt: true,
-            correctImage: true,
-            author: {
-                select: {
-                  username: true,
-                  id: true
-                },
-            },
-            submissions: {
-                where: {
-                  creatorId: userid,
-                },
-                select: {
-                  isCorrect: true,
-                },
-              },
+      where: {
+        groupId: {
+          equals: groupid
         }
+      },
+      select: {
+        id: true,
+        createdAt: true,
+        correctImage: true,
+        author: {
+          select: {
+            username: true,
+            id: true
+          },
+        },
+        submissions: {
+          where: {
+            creatorId: userid,
+          },
+          select: {
+            isCorrect: true,
+          },
+        },
+      }
     });
 
     return challenges;

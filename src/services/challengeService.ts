@@ -1,4 +1,4 @@
-import { Challenge, ChallengeDetail, Group } from "../types";
+import { Challenge, ChallengeDetail } from "../types";
 import { prisma } from "../util/prismaClient";
 
 class ChallengeService {
@@ -13,13 +13,16 @@ class ChallengeService {
     return newChallenge;
   }
 
-  async getChallenge(challengeId: number): Promise<ChallengeDetail> {
+  async getChallenge(challengeId: number): Promise<Challenge> {
     const challenge = await prisma.challenge.findUnique({
       where: {
         id: challengeId,
-      }, 
-      include: 
-      {submissions: true}
+      },
+      include: {
+        submissions: true,
+        author: true,
+        group: true,
+      }
     });
 
     if (!challenge) {

@@ -2,16 +2,16 @@ interface User {
     id: number;
     username: string;
     session: string;
-    GroupMembership: GroupMembership[]
-    challenges: Challenge[]
-    submissions: Submission[]
+    // GroupMembership: GroupMembership[]
+    // challenges: Challenge[]
+    // submissions: Submission[]
 }
 
 interface Group {
     id: number
     name: string
-    GroupMembership: GroupMembership[]
-    challenges: Challenge[]
+    // GroupMembership: GroupMembership[]
+    // challenges: Challenge[]
 }
 
 interface GroupMembership {

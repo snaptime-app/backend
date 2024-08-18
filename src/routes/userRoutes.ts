@@ -10,10 +10,6 @@ class UserRoutes {
   }
 
   intializeRoutes() {
-    this.router.get("/", async (req: Request, res: Response): Promise<Response> => {
-      return res.json({ message: "It works!" });
-    });
-
     this.router.post(
       "/create",
       async (
@@ -37,7 +33,6 @@ class UserRoutes {
         const user = await this.userService.getUser(
           req.get("Authorization"),
         );
-        //console.log(user)
         res.json(user)
       }
     )
