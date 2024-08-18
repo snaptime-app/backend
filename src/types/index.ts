@@ -40,16 +40,16 @@ interface Submission {
     isCorrect: Boolean
     createdAt: Date
     challengeId: number
-    challenge: Challenge
+    // challenge: Challenge
     creatorId: number
-    creator: User
+    // creator: User
 }
 
 interface ImageSimilarResult {
     isSimilar: boolean;
 }
 
-type ChallengeDetail = Omit<Challenge, "group" | "author" | "submissions">
+type ChallengeDetail = Omit<Challenge, "group" | "author">
 type CreateUser = Omit<User, "id" | "GroupMembership" | "challenges" | "submissions">;
 
 export {

@@ -17,11 +17,16 @@ class ChallengeService {
     const challenge = await prisma.challenge.findUnique({
       where: {
         id: challengeId,
-      }
+      },
+      include: {
+        submissions: true,
+      },
     });
+
     if (!challenge) {
       throw new Error(`Challenge with id ${challengeId} not found`);
     }
+
     return challenge;
   }
 }
