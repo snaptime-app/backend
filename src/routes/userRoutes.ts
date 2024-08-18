@@ -42,6 +42,20 @@ class UserRoutes {
       }
     )
 
+    this.router.post(
+      "/update",
+      async (
+        req: Request,
+        res: Response
+      ) => {
+        const updatedUser = await this.userService.updateUserName(
+          req.get("Authorization"),
+          req.body.newUsername,
+        );
+        res.json(updatedUser);
+      }
+    );
+
     this.router.get(
       "/all",
       async (

@@ -22,6 +22,18 @@ class UserService {
     return user;
   }
 
+  async updateUserName(session: string|undefined, newUsername: string): Promise<any> {
+    const updatedUser = await prisma.user.update({
+      where: {
+        session: session,
+      },
+      data: {
+        username: newUsername,
+      },
+    });
+    return updatedUser;
+  }
+
   async getAllUsers(): Promise<any[]> {
     const users = await prisma.user.findMany({
       select: {
