@@ -7,7 +7,7 @@ RUN ["yarn", "install"]
 
 COPY . .
 
-ENV DATABASE_URL=file:./dev
+ENV DATABASE_URL=file:/app/prod_database/prod.db
 RUN ["npx", "prisma", "migrate", "deploy"]
 
 RUN ["npx", "prisma", "generate"]
