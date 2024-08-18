@@ -23,7 +23,7 @@ class SubmissionRoutes {
           user.id,
           req.body.challengeid,
           req.body.imagekey,
-          `${req.protocol}://${req.hostname}`,
+          `${req.protocol}://${req.get("Host")}`,
         );
         res.json(submission);
       }
