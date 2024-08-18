@@ -8,7 +8,7 @@ class SubmissionService {
     this.imageService = new ImageService();
   }
 
-  async createSubmission(userId: number, challengeId: number, attemptedImageId: string): Promise<any> {
+  async createSubmission(userId: number, challengeId: number, attemptedImageId: string, baseUrl: string): Promise<any> {
     const challengeImageId = await prisma.challenge.findUnique({
       where: {
         id: challengeId,
@@ -23,8 +23,8 @@ class SubmissionService {
     }
 
     const acceptSubmission: boolean = await this.imageService.determineImagesSimilar(
-      attemptedImageId,
-      challengeImageId.correctImage,
+      `${baseUrl}/${attemptedImageId}`,
+      `${baseUrl}/${challengeImageId.correctImage}`,
     );
 
     const newSubmission = await prisma.submission.create({

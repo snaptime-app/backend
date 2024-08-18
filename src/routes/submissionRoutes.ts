@@ -22,7 +22,8 @@ class SubmissionRoutes {
         const submission = await this.submissionService.createSubmission(
           user.id,
           req.body.challengeid,
-          req.body.imagekey
+          req.body.imagekey,
+          req.baseUrl,
         );
         res.json(submission)
       }
