@@ -37,6 +37,19 @@ class GroupRoutes {
       res.json(updatedGroup);
     });
 
+    this.router.get(
+      "/groupdetails/:id",
+      async (
+        req: Request,
+        res: Response
+      ) => {
+        const groupDetails = await this.groupService.viewGroupDetails(
+          parseInt(req.params.id),
+        );
+        res.json(groupDetails);
+      }
+    );
+
       this.router.get(
         "/get-members/:id",
         async (

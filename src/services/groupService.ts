@@ -57,6 +57,19 @@ class GroupService {
     return updateGroup;
   }
 
+  async viewGroupDetails(groupid: number): Promise<any> {
+    const details = await prisma.group.findUnique({
+        where: {
+          id: groupid
+        },
+        select: {
+          id: true,
+          name: true
+        }
+    });
+    return details;
+  }
+
   async viewGroupMembers (groupid: number): Promise<any> {
     const groupMembers = await prisma.user.findMany({
       where: {
