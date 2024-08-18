@@ -37,7 +37,9 @@ class ChallengeRoutes {
         const challenge = await this.challengeService.getChallenge(
           parseInt(req.params.id),
         );
-        return challenge;
+        return res.status(200).json(
+          challenge
+        );
       }
     )
   }
