@@ -13,6 +13,10 @@ class RootRoutes {
       return res.json({ message: "Jeffery says hi!" });
     });
 
+    this.router.get("/test", async (req: Request, res: Response): Promise<Response> => {
+      return res.json({ message: "It works!" });
+    });
+
     this.router.get("/rate-limited", rateLimiter(10, 3), async (req: Request, res: Response): Promise<Response> => {
       return res.status(200).json({ message: "Hello from a rate-limited endpoint!" })
     });

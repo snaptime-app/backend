@@ -35,7 +35,7 @@ class ImageRoutes {
                     req.body.imageUrlA,
                     req.body.imageUrlB,
                 );
-                return res.status(200).json({ isSimilar: isSimilar });
+                return res.status(200).json({ isSimilar });
             }
         );
     }

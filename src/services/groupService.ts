@@ -1,4 +1,3 @@
-import { Group } from '../types';
 import { prisma } from '../util/prismaClient';
 
 class GroupService {
