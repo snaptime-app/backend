@@ -40,20 +40,20 @@ model Challenge {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   correctImage String       @unique
-  groupId      Int          
+  groupId      Int
   group        Group        @relation(fields: [groupId], references: [id])
-  authorId     Int          
+  authorId     Int
   author       User         @relation(fields: [authorId], references: [id])
   submissions  Submission[]
 }
 
 model Submission {
-  id Int @id @default(autoincrement())
-  isCorrect Boolean
-  attemptedImage String @unique
-  createdAt DateTime @default(now())
-  challengeId Int
-  challenge Challenge @relation(fields: [challengeId], references: [id])
-  creatorId Int 
-  creator User @relation(fields: [creatorId], references: [id])
+  id             Int       @id @default(autoincrement())
+  isCorrect      Boolean
+  attemptedImage String    @unique
+  createdAt      DateTime  @default(now())
+  challengeId    Int
+  challenge      Challenge @relation(fields: [challengeId], references: [id])
+  creatorId      Int
+  creator        User      @relation(fields: [creatorId], references: [id])
 }

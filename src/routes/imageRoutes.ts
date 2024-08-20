@@ -16,6 +16,7 @@ class ImageRoutes {
         this.router.post(
             "/upload",
             upload.single("imageUpload"),
+            rateLimiter(15, 100),
             async (req: Request, res: Response): Promise<Response> => {
                 if (!req.file) {
                     throw new Error("No file uploaded");
@@ -28,7 +29,7 @@ class ImageRoutes {
 
         this.router.post(
             "/areSimilar",
-            rateLimiter(10, 3),
+            rateLimiter(60, 3),
             async (req: Request, res: Response): Promise<Response> => {
                 const isSimilar: boolean = await this.imageService.determineImagesSimilar(
                     req.body.imageUrlA,
