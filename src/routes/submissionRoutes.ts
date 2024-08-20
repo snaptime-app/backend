@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import SubmissionService from "../services/submissionService";
 import UserService from "../services/userService";
+import { rateLimiter } from "../util/rateLimit";
 
 class SubmissionRoutes {
   router = Router();
@@ -14,6 +15,7 @@ class SubmissionRoutes {
   intializeRoutes() {
     this.router.post(
       "/create",
+      rateLimiter,
       async (
         req: Request,
         res: Response

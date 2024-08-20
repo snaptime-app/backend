@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import UserService from "../services/userService";
+import { rateLimiter } from "../util/rateLimit";
 
 class RootRoutes {
   router = Router();
@@ -11,6 +11,10 @@ class RootRoutes {
   intializeRoutes() {
     this.router.get("/", async (req: Request, res: Response): Promise<Response> => {
       return res.json({ message: "Jeffery says hi!" });
+    });
+
+    this.router.get("/rate-limited", rateLimiter, async (req: Request, res: Response): Promise<Response> => {
+      return res.status(200).json({ message: "Hello from a rate-limited endpoint!" })
     });
   }
 }

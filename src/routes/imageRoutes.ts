@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import ImageService from "../services/imageService";
 import { upload } from "../util/imageUpload";
+import { rateLimiter } from "../util/rateLimit";
 
 class ImageRoutes {
     router = Router();
@@ -25,13 +26,17 @@ class ImageRoutes {
             }
         );
 
-        this.router.post("/areSimilar", async (req: Request, res: Response): Promise<Response> => {
-            const isSimilar: boolean = await this.imageService.determineImagesSimilar(
-                req.body.imageUrlA,
-                req.body.imageUrlB,
-            );
-            return res.status(200).json({ isSimilar: isSimilar });
-        });
+        this.router.post(
+            "/areSimilar",
+            rateLimiter,
+            async (req: Request, res: Response): Promise<Response> => {
+                const isSimilar: boolean = await this.imageService.determineImagesSimilar(
+                    req.body.imageUrlA,
+                    req.body.imageUrlB,
+                );
+                return res.status(200).json({ isSimilar: isSimilar });
+            }
+        );
     }
 }
 
