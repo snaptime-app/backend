@@ -15,7 +15,7 @@ class SubmissionRoutes {
   intializeRoutes() {
     this.router.post(
       "/create",
-      rateLimiter,
+      rateLimiter(10, 3),
       async (
         req: Request,
         res: Response

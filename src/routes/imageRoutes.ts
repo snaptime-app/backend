@@ -28,7 +28,7 @@ class ImageRoutes {
 
         this.router.post(
             "/areSimilar",
-            rateLimiter,
+            rateLimiter(10, 3),
             async (req: Request, res: Response): Promise<Response> => {
                 const isSimilar: boolean = await this.imageService.determineImagesSimilar(
                     req.body.imageUrlA,
