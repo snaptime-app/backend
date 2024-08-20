@@ -121,6 +121,7 @@ class GroupService {
         submissions: {
           where: {
             creatorId: userid,
+            isCorrect: true,
           },
           select: {
             isCorrect: true,
