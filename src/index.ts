@@ -17,7 +17,7 @@ export default class Server {
       console.log("Allowed:", allowedOrigins)
       const acceptedOrigin = (allowedOrigins.indexOf(origin!) >= 0) ? origin : allowedOrigins[0];
       res.header("Access-Control-Allow-Origin", acceptedOrigin);
-      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept". "Authorization");
 
       next();
     });
